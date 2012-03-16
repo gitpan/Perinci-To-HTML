@@ -1,0 +1,16 @@
+Build.PL
+Changes
+LICENSE
+MANIFEST
+MANIFEST.SKIP
+META.yml
+README
+dist.ini
+lib/Perinci/To/HTML.pm
+lib/Perinci/To/HTML/I18N.pm
+lib/Perinci/To/HTML/I18N/en.pm
+lib/Perinci/To/HTML/I18N/id.pm
+t/00-compile.t
+t/release-pod-coverage.t
+t/release-pod-syntax.t
+weaver.ini
