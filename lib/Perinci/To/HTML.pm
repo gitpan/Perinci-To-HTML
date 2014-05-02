@@ -1,12 +1,14 @@
 package Perinci::To::HTML;
 
-use 5.010;
+use 5.010001;
 use Log::Any '$log';
 use Moo;
 
+use Locale::TextDomain::UTF8 'Perinci-To-HTML';
+
 extends 'Perinci::To::PackageBase';
 
-our $VERSION = '0.01'; # VERSION
+our $VERSION = '0.02'; # VERSION
 
 has heading_level => (is => 'rw', default=>sub{1});
 
@@ -63,7 +65,7 @@ sub doc_gen_summary {
 
     $self->start_div("name");
     $self->add_doc_lines(
-        $self->h(0, uc($self->loc("Name"))),
+        $self->h(0, __("Name")),
         $self->doc_parse->{name},
     );
     $self->end_div("name");
@@ -73,7 +75,7 @@ sub doc_gen_summary {
 
     $self->start_div("summary");
     $self->add_doc_lines(
-        $self->h(0, uc($self->loc("Summary"))),
+        $self->h(0, uc(__("Summary"))),
         $self->doc_parse->{summary},
     );
     $self->add_doc_lines("");
@@ -84,7 +86,7 @@ sub doc_gen_version {
 
     $self->start_div("version");
     $self->add_doc_lines(
-        $self->{_meta}{entity_version},
+        $self->{_meta}{entity_v},
     );
     $self->end_div("version");
     $self->add_doc_lines("");
@@ -97,7 +99,7 @@ sub doc_gen_description {
 
     $self->start_div("description");
     $self->add_doc_lines(
-        $self->h(0, uc($self->loc("Description"))),
+        $self->h(0, uc(__("Description"))),
         $self->_m2h($self->doc_parse->{description}),
     );
     $self->start_div("description");
@@ -114,7 +116,7 @@ sub _fdoc_gen {
 
     $self->start_div("name");
     $self->add_doc_lines(
-        $self->h(1, $self->loc("Name")),
+        $self->h(1, __("Name")),
         $p->{name},
     );
     $self->end_div("name");
@@ -122,7 +124,7 @@ sub _fdoc_gen {
     if ($p->{summary}) {
         $self->start_div("summary");
         $self->add_doc_lines(
-            $self->h(1, $self->loc("Summary")),
+            $self->h(1, __("Summary")),
             $p->{summary} . ($p->{summary} =~ /\.$/ ? "":"."),
         );
         $self->end_div("summary");
@@ -131,7 +133,7 @@ sub _fdoc_gen {
     if ($p->{description}) {
         $self->start_div("description");
         $self->add_doc_lines(
-            $self->h(1, $self->loc("Description")),
+            $self->h(1, __("Description")),
             $p->{description},
         );
         $self->end_div("description");
@@ -139,7 +141,7 @@ sub _fdoc_gen {
 
     $self->start_div("parameters");
     $self->add_doc_lines(
-        $self->h(1, $self->loc("Parameters")),
+        $self->h(1, __("Parameters")),
         "<ul>",
     );
     for my $name (sort keys %{$p->{args}}) {
@@ -151,7 +153,7 @@ sub _fdoc_gen {
             qq[<li><span class="name${\($req ? ' req' : '')}">$name</span> ],
             $pa->{human_arg},
             (defined($pa->{human_arg_default}) ?
-                 " (" . $self->loc("default") .
+                 " (" . __("default") .
                      ": $pa->{human_arg_default})" : "")
         ), "");
         if ($pa->{summary}) {
@@ -198,9 +200,11 @@ sub doc_gen_functions {
 1;
 # ABSTRACT: Generate HTML documentation from Rinci package metadata
 
-
 __END__
+
 =pod
+
+=encoding UTF-8
 
 =head1 NAME
 
@@ -208,7 +212,7 @@ Perinci::To::HTML - Generate HTML documentation from Rinci package metadata
 
 =head1 VERSION
 
-version 0.01
+This document describes version 0.02 of Perinci::To::HTML (from Perl distribution Perinci-To-HTML), released on 2014-05-02.
 
 =head1 DESCRIPTION
 
@@ -216,16 +220,31 @@ This documentation is geared more into documenting HTTP API. If you want
 something more Perl-oriented, try L<Perinci::To::POD> (and convert the resulting
 POD to HTML).
 
+=head1 HOMEPAGE
+
+Please visit the project's homepage at L<https://metacpan.org/release/Perinci-To-HTML>.
+
+=head1 SOURCE
+
+Source repository is at L<https://github.com/sharyanto/perl-Perinci-To-HTML>.
+
+=head1 BUGS
+
+Please report any bugs or feature requests on the bugtracker website L<https://rt.cpan.org/Public/Dist/Display.html?Name=Perinci-To-HTML>
+
+When submitting a bug or request, please include a test-file or a
+patch to an existing test-file that illustrates the bug or desired
+feature.
+
 =head1 AUTHOR
 
 Steven Haryanto <stevenharyanto@gmail.com>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2012 by Steven Haryanto.
+This software is copyright (c) 2014 by Steven Haryanto.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-
